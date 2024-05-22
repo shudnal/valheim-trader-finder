@@ -99,7 +99,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a
-          href="https://github.com/morinted/valheim-trader-finder"
+          href="https://github.com/shudnal/valheim-trader-finder"
           target="_blank"
           rel="noopener noreferrer"
         >
