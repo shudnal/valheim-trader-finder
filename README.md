@@ -1,6 +1,6 @@
 # Valheim Traders Finder
 
-Find Haldor, Hildir and Bog Witch without all the stress amd spoilers.
+Find Haldor, Hildir and Bog Witch without all the stress and spoilers.
 
 ## Instructions
 
