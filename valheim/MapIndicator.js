@@ -1,13 +1,13 @@
 import React from "react";
 
-const coordinateToPercentage = (coordinate) => ((coordinate + 10000) / 20000) * 100
+const coordinateToPercentage = (coordinate) => ((coordinate + 10500) / 21000) * 100
 
-export function MapIndicator({ x, y, size, color, children }) {
+export function MapIndicator({ x, y, size, color, name, children }) {
   const xPercentage = coordinateToPercentage(x)
   const yPercentage = 100 - coordinateToPercentage(y)
   return (
     <div
-      title={`goto ${parseInt(x)},${parseInt(y)}`}
+      title={`${name}\ngoto ${parseInt(x)} ${parseInt(y)}`}
       style={{
         position: "absolute",
         top: `${yPercentage}%`,
@@ -18,9 +18,11 @@ export function MapIndicator({ x, y, size, color, children }) {
         lineHeight: 0,
         width: `${size}%`,
         height: `${size}%`,
-        background: `radial-gradient(circle at center, ${color} 0, ${color} 5%, transparent 5%`,
-        border: `1px solid ${color}`,
+        background: `radial-gradient(circle at center, ${color} 0%, ${color} 5%, ${color + "CF"} 7%, ${color+"7F"} 8%, ${color+"3F"} 10%, transparent 100%)`,
+        backgroundColor: color + "0A",
+        border: `1px solid ${color + "20"}`,
         borderRadius: "50%",
+        cursor: "default",
       }}
     >
       {children}

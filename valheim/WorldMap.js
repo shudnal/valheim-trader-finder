@@ -1,31 +1,33 @@
 import React from "react";
 import { MapIndicator } from "./MapIndicator";
 
-export function WorldMap({ locationsHaldor, locationsHildir }) {
+export function WorldMap({ locationStart, locationsHaldor, locationsHildir, locationsWitch }) {
   return (
     <>
     <p style={{
       textAlign: 'center',
       color: '#606060'
-    }}><em>Hover on a location for cheat teleport command.</em></p>
+    }}><em>Hover on a location to see name and goto command.</em></p>
     <div
       style={{
-        width: "100%",
-        paddingBottom: "100%",
+        padding: "50%",
         border: "2px solid #353535",
         borderRadius: "50%",
         overflow: "hidden",
         position: "relative",
       }}
     >
-      <MapIndicator size={2} color="transparent" x={0} y={0}>
-        +
-      </MapIndicator>
+      {locationStart.map(({ x, y }) => (
+        <MapIndicator key={`${x},${y}`} size={0.6} x={x} y={y} color="transparent" name="Sacrificial Stones" >+</MapIndicator>
+      ))}
       {locationsHaldor.map(({ x, y }) => (
-        <MapIndicator key={`${x},${y}`} size={10} x={x} y={y} color="#965317" />
+        <MapIndicator key={`${x},${y}`} size={6} x={x} y={y} color="#965317" name="Haldor" />
       ))}
       {locationsHildir.map(({ x, y }) => (
-        <MapIndicator key={`${x},${y}`} size={10} x={x} y={y} color="#000078" />
+        <MapIndicator key={`${x},${y}`} size={6} x={x} y={y} color="#000078" name="Hildir" />
+      ))}
+      {locationsWitch.map(({ x, y }) => (
+        <MapIndicator key={`${x},${y}`} size={6} x={x} y={y} color="#559617" name="Bog Witch" />
       ))}
     </div>
     </>

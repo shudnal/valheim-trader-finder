@@ -10,3 +10,82 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.arrow {
+  height: 30px;
+  position: relative;
+  width: 4px;
+  background: black;
+  margin: 0px 20px;
+  display: inline-block;
+}
+
+.arrow:before {
+  content: " ";
+  width: 4px;
+  background: black;
+  height: 17px;
+  position: absolute;
+  top: -5px;
+  transform: rotate(50deg);
+  left: -5px;
+}
+.arrow:after {
+  content: " ";
+  width: 4px;
+  background: black;
+  height: 17px;
+  position: absolute;
+  top: -5px;
+  transform: rotate(-50deg);
+  right: -5px;
+}
+
+.east {
+  transform: rotate(90deg);
+}
+.east-northeast {
+  transform: rotate(67deg);
+}
+.northeast {
+  transform: rotate(45deg);
+}
+.north-northeast {
+  transform: rotate(22deg);
+}
+.north {
+  transform: rotate(0deg);
+}
+.north-northwest {
+  transform: rotate(-22deg);
+}
+.northwest {
+  transform: rotate(-45deg);
+}
+.west-northwest {
+  transform: rotate(-67deg);
+}
+.west {
+  transform: rotate(-90deg);
+}
+.west-southwest {
+  transform: rotate(-112deg);
+}
+.southwest {
+  transform: rotate(-135deg);
+}
+.south-southwest {
+  transform: rotate(-157deg);
+}
+.south {
+  transform: rotate(-180deg);
+}
+.south-southeast {
+  transform: rotate(157deg);
+}
+.southeast {
+  transform: rotate(135deg);
+}
+.east-southeast {
+  transform: rotate(112deg);
+}

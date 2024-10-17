@@ -20,13 +20,12 @@ function findText(buf, pos, ascii) {
   return -1;
 }
 
-function getVendorLocations(name, buf, len, vendor_id, vendor_name) {
+function getLocations(name, buf, len, location_id, location_name) {
   console.log(name, buf, len);
   let locations = [];
-  // Vendor_Blackforest and Hildir_camp non-null-terminated is followed by its 32bit float x/z/y coordinates
-  let offset = findText(buf, 0, vendor_id);
+  let offset = findText(buf, 0, location_id);
   if (offset === -1) {
-    return [vendor_name + "'s not found.", locations];
+    return [location_name + "'s not found.", locations];
   }
   while (offset !== -1) {
     let coordview = new DataView(buf.buffer, offset);
@@ -35,7 +34,7 @@ function getVendorLocations(name, buf, len, vendor_id, vendor_name) {
     let z = coordview.getFloat32(4, true);
     let y = coordview.getFloat32(8, true);
     console.log(
-      "found "+vendor_name+": (" +
+      "found "+location_name+": (" +
         x.toFixed(4) +
         "," +
         y.toFixed(4) +
@@ -44,17 +43,25 @@ function getVendorLocations(name, buf, len, vendor_id, vendor_name) {
         ")"
     );
     locations.push({ x: x, y: y, z: z });
-    offset = findText(buf, offset, vendor_id);
+    offset = findText(buf, offset, location_id);
   }
   return [null, locations];
 }
 
 function getTraderLocations(name, buf, len) {
-  return getVendorLocations(name, buf, len, "Vendor_BlackForest", "Haldor");
+  return getLocations(name, buf, len, "Vendor_BlackForest", "Haldor");
 }
 
 function getHildirLocations(name, buf, len) {
-  return getVendorLocations(name, buf, len, "Hildir_camp", "Hildir");
+  return getLocations(name, buf, len, "Hildir_camp", "Hildir");
+}
+
+function getWitchLocations(name, buf, len) {
+  return getLocations(name, buf, len, "BogWitch_Camp", "Bog Witch");
+}
+
+function getStartTempleLocation(name, buf, len) {
+  return getLocations(name, buf, len, "StartTemple", "Start");
 }
 
 export function Dropzone({ onLocationsFound }) {
@@ -78,11 +85,21 @@ export function Dropzone({ onLocationsFound }) {
         new Uint8Array(reader.result),
         reader.result.byteLength
       );
-      if (errorHaldor && errorHildir) {
-        setError(errorHaldor + " " + errorHildir);
+      const [errorWitch, locationsWitch] = getWitchLocations(
+        worldFile.name,
+        new Uint8Array(reader.result),
+        reader.result.byteLength
+      );
+      const [errorStart, locationStart] = getStartTempleLocation(
+        worldFile.name,
+        new Uint8Array(reader.result),
+        reader.result.byteLength
+      );
+      if (errorHaldor && errorHildir && errorWitch) {
+        setError(errorHaldor + " " + errorHildir + " " + errorWitch);
         return;
       }
-      onLocationsFound([worldFile.name.slice(0, -'.db'.length), locationsHaldor, locationsHildir]);
+      onLocationsFound([worldFile.name.slice(0, -'.db'.length), locationsHaldor, locationsHildir, locationsWitch, locationStart]);
     };
     reader.readAsArrayBuffer(worldFile);
     console.log(worldFile);
